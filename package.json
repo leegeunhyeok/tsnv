@@ -1,0 +1,14 @@
+{
+  "name": "tsnv",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leegeunhyeok/tsnv.git"
+  },
+  "author": "Geunhyeok Lee <dev.ghlee@gmail.com>",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "yarn@4.11.0"
+}
