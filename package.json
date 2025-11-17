@@ -1,5 +1,6 @@
 {
   "name": "tsnv",
+  "type": "module",
   "version": "0.0.0",
   "license": "MIT",
   "repository": {
@@ -7,6 +8,20 @@
     "url": "https://github.com/leegeunhyeok/tsnv.git"
   },
   "author": "Geunhyeok Lee <dev.ghlee@gmail.com>",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "build": "tsdown"
+  },
+  "dependencies": {
+    "tsdown": "0.16.5"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.6",
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  },
   "engines": {
     "node": ">=20.19.0"
   },
