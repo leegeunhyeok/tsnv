@@ -14,5 +14,8 @@ export default defineConfig([
     outDir: 'dist',
     dts: true,
     fixedExtension: false,
+    checks: {
+      legacyCjs: false,
+    },
   },
 ]);
