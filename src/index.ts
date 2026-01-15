@@ -1,4 +1,5 @@
 import { loadConfig } from 'c12';
+
 import { debug } from './common';
 import type { ResolvedConfig } from './config/default';
 import { DEFAULT_CONFIG } from './config/default';

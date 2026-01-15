@@ -1,5 +1,6 @@
 import { globSync } from 'node:fs';
 import path from 'node:path';
+
 import type { ResolvedConfig } from '../config/default';
 import { isDts } from './path';
 

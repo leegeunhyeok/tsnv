@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+
 import { noop } from 'es-toolkit';
 import { $ } from 'zx';
 
@@ -17,7 +18,10 @@ export interface CreateFixtureOptions {
   pnp?: boolean;
 }
 
-export async function createFixture(fixtureName: string, options?: CreateFixtureOptions): Promise<Fixture> {
+export async function createFixture(
+  fixtureName: string,
+  options?: CreateFixtureOptions,
+): Promise<Fixture> {
   log('Setting up fixture...');
   const tmpdir = os.tmpdir();
   const fixtureDir = path.join(tmpdir, 'tsnv-tests');
@@ -53,7 +57,9 @@ export async function createFixture(fixtureName: string, options?: CreateFixture
   log('Setting up Yarn...');
   await $({ stdio: 'inherit' })`yarn set version stable`;
   await $({ stdio: 'inherit' })`yarn config set enableGlobalCache false`;
-  await $({ stdio: 'inherit' })`yarn config set nodeLinker ${options?.pnp ? 'pnp' : 'node-modules'}`;
+  await $({
+    stdio: 'inherit',
+  })`yarn config set nodeLinker ${options?.pnp ? 'pnp' : 'node-modules'}`;
   await $({ stdio: 'inherit' })`yarn --version`;
 
   log('Installing package...');

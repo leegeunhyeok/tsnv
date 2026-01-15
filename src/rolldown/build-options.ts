@@ -1,10 +1,14 @@
 import type * as rolldown from 'rolldown';
+
 import type { Context, Format } from '../types';
 import { resolveFilename } from '../utils/path';
 import { external } from './plugins/external';
 import type { BuildOptions, PluginContext } from './types';
 
-export function resolveBuildOptions(context: Context, options: BuildOptions): rolldown.BuildOptions[] {
+export function resolveBuildOptions(
+  context: Context,
+  options: BuildOptions,
+): rolldown.BuildOptions[] {
   const pluginContext: PluginContext = {
     ...context,
     config: options.config,

@@ -1,4 +1,5 @@
 import type { OutputOptions } from 'rolldown';
+
 import type { Format } from '../types';
 
 export interface Config {

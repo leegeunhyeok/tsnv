@@ -2,11 +2,21 @@
   "name": "tsnv",
   "version": "0.0.0",
   "description": "Modern build toolkit for React Native libraries",
-  "type": "module",
+  "license": "MIT",
+  "author": "Geunhyeok Lee <dev.ghlee@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leegeunhyeok/tsnv.git"
+  },
   "bin": "bin.js",
+  "files": [
+    "bin.js",
+    "dist"
+  ],
+  "type": "module",
   "main": "./dist/config.cjs",
-  "types": "./dist/config.d.cjs",
   "module": "./dist/config.js",
+  "types": "./dist/config.d.cjs",
   "exports": {
     ".": {
       "import": {
@@ -20,22 +30,13 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "bin.js",
-    "dist"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/leegeunhyeok/tsnv.git"
-  },
-  "author": "Geunhyeok Lee <dev.ghlee@gmail.com>",
   "scripts": {
     "prepack": "yarn build",
     "dev": "tsx src/index.ts",
     "typecheck": "tsc --noEmit",
-    "lint": "biome check .",
-    "lint:fix": "biome check . --write",
+    "lint": "oxlint --type-aware --deny-warnings",
+    "lint:fix": "oxlint --type-aware --deny-warnings --fix",
+    "fmt": "oxfmt",
     "test": "vitest --run",
     "test:e2e": "vitest --run --config vitest.e2e.config.ts",
     "build": "tsdown"
@@ -48,14 +49,27 @@
     "tsdown": "0.20.0-beta.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.6",
     "@types/node": "^24.10.1",
     "es-toolkit": "^1.43.0",
+    "oxfmt": "^0.24.0",
+    "oxlint": "^1.39.0",
+    "oxlint-tsgolint": "^0.11.1",
     "picocolors": "^1.1.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.17",
     "zx": "^8.8.5"
+  },
+  "dependenciesMeta": {
+    "oxfmt": {
+      "unplugged": true
+    },
+    "oxlint": {
+      "unplugged": true
+    },
+    "oxlint-tsgolint": {
+      "unplugged": true
+    }
   },
   "engines": {
     "node": ">=20.19.0"

@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { $ } from 'zx';
+
 import { createFixture, type Fixture } from './testing-utils';
 
 describe('tsnv', () => {

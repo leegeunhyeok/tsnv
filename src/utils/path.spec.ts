@@ -1,4 +1,5 @@
 import { describe, expect, it, vi, vitest } from 'vitest';
+
 import type { ResolvedConfig } from '../config/default';
 import { hasPlatformSpecificModule, isDts, resolveFilename } from './path';
 
@@ -24,9 +25,11 @@ describe('path', () => {
           specifiers: ['android', 'ios', 'native'],
         } as ResolvedConfig),
       ).toBe(true);
-      expect(await hasPlatformSpecificModule('./index', 'root', { specifiers: ['foo', 'bar'] } as ResolvedConfig)).toBe(
-        false,
-      );
+      expect(
+        await hasPlatformSpecificModule('./index', 'root', {
+          specifiers: ['foo', 'bar'],
+        } as ResolvedConfig),
+      ).toBe(false);
     });
   });
 

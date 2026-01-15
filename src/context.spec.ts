@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { resolvePackageType } from './context';
 
 describe('context', () => {
