@@ -1,7 +1,7 @@
 {
   "name": "tsnv",
   "version": "0.0.0",
-  "description": "Modern bundler for React Native libraries - fast, platform-aware, zero-config",
+  "description": "Modern build toolkit for React Native libraries",
   "type": "module",
   "bin": "bin.js",
   "main": "./dist/config.cjs",
@@ -41,20 +41,20 @@
     "build": "tsdown"
   },
   "dependencies": {
-    "c12": "^3.3.2",
+    "c12": "^3.3.3",
     "empathic": "^2.0.0",
-    "obug": "^2.0.0",
-    "rolldown": "1.0.0-beta.51",
-    "tsdown": "0.16.5"
+    "obug": "^2.1.1",
+    "rolldown": "1.0.0-beta.60",
+    "tsdown": "0.20.0-beta.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.6",
     "@types/node": "^24.10.1",
-    "es-toolkit": "^1.42.0",
+    "es-toolkit": "^1.43.0",
     "picocolors": "^1.1.1",
-    "tsx": "^4.20.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.10",
+    "vitest": "^4.0.17",
     "zx": "^8.8.5"
   },
   "engines": {
