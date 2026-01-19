@@ -32,12 +32,12 @@ export function external(context: PluginContext): RolldownPlugin {
         return { id, external: true };
       }
 
-      const extname = path.extname(id);
+      const extname = path.extname(id).slice(1);
       if (extname) {
         if (context.config.assetExtensions.includes(extname)) {
           return { id, external: true };
         }
-
+  
         if (!context.config.sourceExtensions.includes(extname)) {
           throw new Error(`Unsupported file extension: ${extname}`);
         }
