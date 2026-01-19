@@ -1,0 +1,75 @@
+name: Release
+
+env:
+  BASE_BRANCH: 'main'
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      preset:
+        description: 'The preset version to release'
+        required: true
+        default: 'manual'
+        type: choice
+        options:
+        - manual
+        - dev
+      version:
+        description: The version to release
+        type: string
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Tools
+        uses: jdx/mise-action@v3
+
+      - name: Setup Node
+        run: corepack enable
+      
+      - name: Setup NPM
+        run: |
+          npm install -g npm@latest
+          npm -v
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Publish with custom version
+        if: inputs.preset
+        run: |
+          if [ "${{ inputs.preset }}" = "manual" ]; then
+            if [ -z "${{ inputs.version }}" ]; then
+              echo "No version provided"
+              exit 1
+            fi
+            yarn scripts:version ${{ inputs.version }}
+          else
+            yarn scripts:version ${{ inputs.preset }}
+          fi
+          yarn scripts:publish dev
+
+      - name: Create Release Pull Request
+        if: ${{ !inputs.preset }}
+        uses: changesets/action@v1
+        with:
+          version: yarn changeset version
+          publish: yarn scripts:publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_BRANCH: ${{ env.BASE_BRANCH }}
