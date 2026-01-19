@@ -35,10 +35,7 @@ describe('path', () => {
 
   describe('resolveFilename', () => {
     it('should resolve the filename', () => {
-      expect(resolveFilename('esm', 'esm')).toBe('[name].js');
-      expect(resolveFilename('cjs', 'cjs')).toBe('[name].js');
-      expect(resolveFilename('cjs', 'esm')).toBe('[name].mjs');
-      expect(resolveFilename('esm', 'cjs')).toBe('[name].cjs');
+      expect(resolveFilename()).toBe('[name].js');
     });
   });
 

@@ -1,5 +1,16 @@
 {
-  "name": "tsnv-test-lib",
+  "name": "tsnv-test-lib-cjs",
   "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "packageManager": "yarn@4.12.0"
 }

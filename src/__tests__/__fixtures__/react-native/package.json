@@ -1,0 +1,9 @@
+{
+  "name": "react-native",
+  "version": "0.0.0",
+  "files": [
+    "Libraries",
+    "rn-get-polyfills.js"
+  ],
+  "packageManager": "yarn@4.12.0"
+}

@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import type * as rolldown from 'rolldown';
 
 import type { Context, Format } from '../types';
@@ -14,12 +16,10 @@ export function resolveBuildOptions(
     config: options.config,
   };
 
-  const shouldClean = options.config.clean;
   const baseOptions: rolldown.BuildOptions = {
     input: options.files,
     plugins: [external(pluginContext)],
     output: {
-      dir: options.config.outDir,
       banner: options.config.banner,
       footer: options.config.footer,
       intro: options.config.intro,
@@ -31,24 +31,28 @@ export function resolveBuildOptions(
   };
 
   let formats: Format[];
-  if (!Array.isArray(options.config.format)) {
-    formats = [options.config.format];
-  } else {
+  if (Array.isArray(options.config.format)) {
     formats = options.config.format;
+  } else {
+    formats = [options.config.format];
   }
 
-  return formats.map((format, index) => {
-    const filename = resolveFilename(context.packageType, format);
+  const uniqueFormats = Array.from(new Set(formats));
+  const isSingleFormat = uniqueFormats.length === 1;
+
+  return uniqueFormats.map((format) => {
+    const filename = resolveFilename();
 
     return {
       ...baseOptions,
       output: {
         ...baseOptions.output,
-        cleanDir: index === 0 ? shouldClean : false,
+        dir: isSingleFormat ? options.config.outDir : path.join(options.config.outDir, format),
+        cleanDir: options.config.clean,
         format,
         entryFileNames: filename,
         chunkFileNames: filename,
       },
-    };
+    } satisfies rolldown.BuildOptions;
   });
 }

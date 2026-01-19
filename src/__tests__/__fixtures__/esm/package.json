@@ -1,6 +1,17 @@
 {
-  "name": "tsnv-test-lib",
+  "name": "tsnv-test-lib-esm",
   "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "packageManager": "yarn@4.12.0"
 }

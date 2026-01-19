@@ -1,0 +1,12 @@
+{
+  "name": "tsnv-test-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build:android": "rollipop bundle --platform android --entry-file=src/index.ts --bundle-output=dist/bundle.android.js --reset-cache",
+    "build:ios": "rollipop bundle --platform ios --entry-file=src/index.ts --bundle-output=dist/bundle.ios.js --reset-cache"
+  },
+  "devDependencies": {
+    "rollipop": "0.1.0-alpha.10"
+  },
+  "packageManager": "yarn@4.12.0"
+}

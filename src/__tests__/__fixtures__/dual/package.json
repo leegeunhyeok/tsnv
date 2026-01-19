@@ -1,5 +1,23 @@
 {
-  "name": "tsnv-test-lib",
+  "name": "tsnv-test-lib-dual",
   "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.js",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
   "packageManager": "yarn@4.12.0"
 }
