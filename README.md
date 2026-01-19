@@ -2,7 +2,7 @@
 
 # tsnv
 
-Modern bundler for React Native libraries - fast, platform-aware, zero-config<br>
+Modern build toolkit for React Native libraries<br>
 (powered by [Rolldown](https://rolldown.rs))
 
 </div>
