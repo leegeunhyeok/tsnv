@@ -37,7 +37,7 @@ export function external(context: PluginContext): RolldownPlugin {
         if (context.config.assetExtensions.includes(extname)) {
           return { id, external: true };
         }
-  
+
         if (!context.config.sourceExtensions.includes(extname)) {
           throw new Error(`Unsupported file extension: ${extname}`);
         }
