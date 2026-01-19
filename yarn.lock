@@ -2308,7 +2308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rolldown-plugin-dts@npm:^0.21.1":
+"rolldown-plugin-dts@npm:0.21.2, rolldown-plugin-dts@npm:^0.21.1":
   version: 0.21.2
   resolution: "rolldown-plugin-dts@npm:0.21.2"
   dependencies:
@@ -2752,6 +2752,7 @@ __metadata:
     oxlint-tsgolint: "npm:^0.11.1"
     picocolors: "npm:^1.1.1"
     rolldown: "npm:1.0.0-beta.60"
+    rolldown-plugin-dts: "npm:0.21.2"
     tsdown: "npm:0.20.0-beta.3"
     tsx: "npm:^4.21.0"
     typescript: "npm:^5.9.3"

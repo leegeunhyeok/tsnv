@@ -20,7 +20,7 @@ describe('tsnv', () => {
     });
 
     afterAll(async () => {
-      await cleanupFixture();
+      // await cleanupFixture();
     });
 
     it.sequential('should build a package', async () => {
@@ -30,9 +30,15 @@ describe('tsnv', () => {
 
     it.sequential('should contain generated files', async () => {
       const { stdout } = await $`yarn pack --out ${PACKED_PACKAGE_PATH} --json`;
+
+      // JavaScript
       expect(stdout).toContain('greeting.android.js');
       expect(stdout).toContain('greeting.ios.js');
       expect(stdout).toContain('index.js');
+
+      // Types
+      expect(stdout).toContain('types/greeting.d.ts');
+      expect(stdout).toContain('types/index.d.ts');
     });
 
     it.sequential('should build a package and run it by platform', async () => {
@@ -79,9 +85,15 @@ describe('tsnv', () => {
 
     it.sequential('should contain generated files', async () => {
       const { stdout } = await $`yarn pack --out ${PACKED_PACKAGE_PATH} --json`;
+
+      // JavaScript
       expect(stdout).toContain('greeting.android.js');
       expect(stdout).toContain('greeting.ios.js');
       expect(stdout).toContain('index.js');
+
+      // Types
+      expect(stdout).toContain('types/greeting.d.ts');
+      expect(stdout).toContain('types/index.d.ts');
     });
 
     it.sequential('should build a package and run it by platform', async () => {
@@ -141,6 +153,10 @@ describe('tsnv', () => {
       expect(stdout).toContain('esm/greeting.android.js');
       expect(stdout).toContain('esm/greeting.ios.js');
       expect(stdout).toContain('esm/index.js');
+
+      // Types
+      expect(stdout).toContain('types/greeting.d.ts');
+      expect(stdout).toContain('types/index.d.ts');
     });
 
     it.sequential('should build a package and run it by platform (CommonJS/ESModule)', async () => {

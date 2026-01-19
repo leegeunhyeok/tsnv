@@ -3,7 +3,8 @@ import path from 'node:path';
 import type * as rolldown from 'rolldown';
 
 import type { Context, Format } from '../types';
-import { resolveFilename } from '../utils/path';
+import { getUniquePlatformSpecificFiles, resolveFilename } from '../utils/path';
+import { dts } from './plugins/dts';
 import { external } from './plugins/external';
 import type { BuildOptions, PluginContext } from './types';
 
@@ -39,10 +40,9 @@ export function resolveBuildOptions(
 
   const uniqueFormats = Array.from(new Set(formats));
   const isSingleFormat = uniqueFormats.length === 1;
+  const filename = resolveFilename();
 
-  return uniqueFormats.map((format) => {
-    const filename = resolveFilename();
-
+  const resolvedBuildOptions = uniqueFormats.map((format) => {
     return {
       ...baseOptions,
       output: {
@@ -55,4 +55,29 @@ export function resolveBuildOptions(
       },
     } satisfies rolldown.BuildOptions;
   });
+
+  if (options.config.dts) {
+    resolvedBuildOptions.push({
+      ...baseOptions,
+      input: getUniquePlatformSpecificFiles(
+        options.files,
+        options.config.sourceExtensions,
+        options.config.specifiers,
+      ),
+      plugins: [
+        ...(Array.isArray(baseOptions.plugins) ? baseOptions.plugins : [baseOptions.plugins]),
+        dts(options.config),
+      ],
+      output: {
+        ...baseOptions.output,
+        cleanDir: options.config.clean,
+        dir: path.join(options.config.outDir, 'types'),
+        format: 'esm',
+        entryFileNames: filename,
+        chunkFileNames: filename,
+      },
+    } satisfies rolldown.BuildOptions);
+  }
+
+  return resolvedBuildOptions;
 }

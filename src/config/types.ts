@@ -75,4 +75,17 @@ export interface Config {
    * Defaults to `true`
    */
   clean?: boolean;
+  /**
+   * Experimental configuration.
+   */
+  experimental?: ExperimentalConfig;
+}
+
+export interface ExperimentalConfig {
+  /**
+   * Whether to use the tsgo compiler.
+   *
+   * To use this option, make sure `@typescript/native-preview` is installed as a dependency.
+   */
+  tsgo?: boolean;
 }
