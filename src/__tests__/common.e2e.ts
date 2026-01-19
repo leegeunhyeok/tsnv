@@ -20,7 +20,7 @@ describe('tsnv', () => {
     });
 
     afterAll(async () => {
-      // await cleanupFixture();
+      await cleanupFixture();
     });
 
     it.sequential('should build a package', async () => {
@@ -226,6 +226,45 @@ describe('tsnv', () => {
       );
       expect(androidBundleEsm).toContain('esm/greeting.android.js');
       expect(iosBundleEsm).toContain('esm/greeting.ios.js');
+    });
+  });
+
+  describe.sequential('Yarn PnP', () => {
+    let fixture: Fixture;
+    let $: Shell;
+
+    beforeAll(async () => {
+      await cleanupFixture();
+      fixture = await createFixture('dual', { pnp: true });
+      $ = fixture.$;
+    });
+
+    afterAll(async () => {
+      await cleanupFixture();
+    });
+
+    it.sequential('should build a package', async () => {
+      const { exitCode } = await $`yarn tsnv`;
+      expect(exitCode).toBe(0);
+    });
+
+    it.sequential('should contain generated files', async () => {
+      const { stdout } = await $`yarn pack --out ${PACKED_PACKAGE_PATH} --json`;
+
+      // CommonJS
+      expect(stdout).toContain('cjs/greeting.android.js');
+      expect(stdout).toContain('cjs/greeting.ios.js');
+      expect(stdout).toContain('cjs/index.js');
+
+      // ESM
+      expect(stdout).toContain('esm/greeting.android.js');
+      expect(stdout).toContain('esm/greeting.ios.js');
+      expect(stdout).toContain('esm/index.js');
+
+      // Types
+      expect(stdout).toContain('types/greeting.android.d.ts');
+      expect(stdout).toContain('types/greeting.ios.d.ts');
+      expect(stdout).toContain('types/index.d.ts');
     });
   });
 });
