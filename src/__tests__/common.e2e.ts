@@ -262,8 +262,7 @@ describe('tsnv', () => {
       expect(stdout).toContain('esm/index.js');
 
       // Types
-      expect(stdout).toContain('types/greeting.android.d.ts');
-      expect(stdout).toContain('types/greeting.ios.d.ts');
+      expect(stdout).toContain('types/greeting.d.ts');
       expect(stdout).toContain('types/index.d.ts');
     });
   });

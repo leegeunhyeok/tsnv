@@ -82,7 +82,7 @@ describe('path', () => {
         'index.test.ts',
       );
       expect(removePlatformSpecificExtension('index.android.d.ts', extensions, specifiers)).toBe(
-        'index.android.ts',
+        'index.android.d.ts',
       );
     });
   });
