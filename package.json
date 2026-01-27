@@ -40,6 +40,7 @@
     "fmt": "oxfmt",
     "test": "vitest --run",
     "test:e2e": "vitest --run --config vitest.e2e.config.ts",
+    "test:all": "yarn test && yarn test:e2e",
     "build": "tsdown",
     "scripts:version": ".scripts/version.sh",
     "scripts:publish": ".scripts/publish.sh"
