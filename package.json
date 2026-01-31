@@ -2,6 +2,9 @@
   "name": "tsnv",
   "version": "0.0.0",
   "description": "Modern build toolkit for React Native libraries",
+  "workspaces": [
+    "example"
+  ],
   "license": "MIT",
   "author": "Geunhyeok Lee <dev.ghlee@gmail.com>",
   "repository": {

@@ -1312,6 +1312,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsnv/example@workspace:example":
+  version: 0.0.0-use.local
+  resolution: "@tsnv/example@workspace:example"
+  dependencies:
+    tsnv: "workspace:*"
+    typescript: "npm:5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@tybys/wasm-util@npm:^0.10.1":
   version: 0.10.1
   resolution: "@tybys/wasm-util@npm:0.10.1"
@@ -3574,7 +3583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsnv@workspace:.":
+"tsnv@workspace:*, tsnv@workspace:.":
   version: 0.0.0-use.local
   resolution: "tsnv@workspace:."
   dependencies:
@@ -3626,7 +3635,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.9.3":
+"typescript@npm:5.9.3, typescript@npm:^5.9.3":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -3636,7 +3645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.3#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:

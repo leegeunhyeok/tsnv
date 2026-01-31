@@ -1,0 +1,11 @@
+{
+  "name": "@tsnv/example",
+  "private": true,
+  "scripts": {
+    "build": "tsnv"
+  },
+  "devDependencies": {
+    "tsnv": "workspace:*",
+    "typescript": "5.9.3"
+  }
+}
