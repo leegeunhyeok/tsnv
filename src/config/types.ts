@@ -1,3 +1,4 @@
+import type { TsConfigJson } from 'get-tsconfig';
 import type { OutputOptions } from 'rolldown';
 
 import type { Format } from '../types';
@@ -75,6 +76,21 @@ export interface Config {
    * Defaults to `true`
    */
   clean?: boolean;
+  /**
+   * The path to the tsconfig.json file.
+   *
+   * If set to `false`, the plugin will ignore any `tsconfig.json` file.
+   * You can still specify `compilerOptions` directly in the options.
+   *
+   * Defaults to `'tsconfig.json'`
+   */
+  tsconfig?: string;
+  /**
+   * Pass a raw `tsconfig.json` object directly to the plugin.
+   *
+   * @see https://www.typescriptlang.org/tsconfig
+   */
+  tsconfigRaw?: Omit<TsConfigJson, 'compilerOptions'>;
   /**
    * Experimental configuration.
    */

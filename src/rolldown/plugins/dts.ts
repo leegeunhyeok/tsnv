@@ -37,5 +37,13 @@ export function dts(config: ResolvedConfig): rolldown.RolldownPluginOption {
     },
   };
 
-  return [dtsPlugin({ emitDtsOnly: true, tsgo: config.experimental?.tsgo }), dtsRenamer];
+  return [
+    dtsPlugin({
+      emitDtsOnly: true,
+      tsconfig: config.tsconfig,
+      tsconfigRaw: config.tsconfigRaw,
+      tsgo: config.experimental?.tsgo,
+    }),
+    dtsRenamer,
+  ];
 }

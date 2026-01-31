@@ -2294,6 +2294,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-tsconfig@npm:^4.13.1":
+  version: 4.13.1
+  resolution: "get-tsconfig@npm:4.13.1"
+  dependencies:
+    resolve-pkg-maps: "npm:^1.0.0"
+  checksum: 10c0/75c8ccebc411073338d7b7154f18659480d4888d1b12a74a21507d14c6e3b092e260454efe6ce33b33eaf513d86491b8f16191358fe3e0a682a215febd1846cc
+  languageName: node
+  linkType: hard
+
 "giget@npm:^2.0.0":
   version: 2.0.0
   resolution: "giget@npm:2.0.0"
@@ -3739,6 +3748,7 @@ __metadata:
     c12: "npm:^3.3.3"
     empathic: "npm:^2.0.0"
     es-toolkit: "npm:^1.44.0"
+    get-tsconfig: "npm:^4.13.1"
     obug: "npm:^2.1.1"
     oxfmt: "npm:^0.27.0"
     oxlint: "npm:^1.42.0"

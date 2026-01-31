@@ -6,8 +6,6 @@ import type { RolldownPlugin } from 'rolldown';
 import { Format } from '../../types';
 import { calcSize, formatBytes, type SizeInfo } from '../../utils/fs';
 
-const PLUGIN_NAME = 'tsnv:test';
-
 export interface ReportOptions {
   cwd: string;
   format: Format | 'dts';
@@ -29,7 +27,7 @@ export function report(options: ReportOptions): RolldownPlugin {
   })();
 
   return {
-    name: PLUGIN_NAME,
+    name: 'tsnv:report',
     async writeBundle(outputOptions, bundle) {
       const outDir = path.relative(
         cwd,
