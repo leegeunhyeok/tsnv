@@ -2,6 +2,8 @@
 
 # tsnv
 
+<img alt="preview" src="./preview.png">
+
 Modern build toolkit for React Native libraries<br>
 (powered by [Rolldown](https://rolldown.rs))
 
