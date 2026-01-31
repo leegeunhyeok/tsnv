@@ -52,6 +52,10 @@ describe('tsnv', () => {
 
       await fs.promises.writeFile(entryFilePath, `require('${packageName}').greeting();`);
 
+      // Check TypeScript compilation
+      const { exitCode: tscExitCode } = await app.$({ nothrow: true })`yarn tsc --noEmit`;
+      expect(tscExitCode).toBe(0);
+
       const { exitCode: androidExitCode } = await app.$`yarn build:android`;
       const { exitCode: iosExitCode } = await app.$`yarn build:ios`;
       expect(androidExitCode).toBe(0);
@@ -109,6 +113,10 @@ describe('tsnv', () => {
         entryFilePath,
         `import { greeting } from '${packageName}';` + `greeting();`,
       );
+
+      // Check TypeScript compilation
+      const { exitCode: tscExitCode } = await app.$({ nothrow: true })`yarn tsc --noEmit`;
+      expect(tscExitCode).toBe(0);
 
       const { exitCode: androidExitCode } = await app.$`yarn build:android`;
       const { exitCode: iosExitCode } = await app.$`yarn build:ios`;
@@ -170,6 +178,10 @@ describe('tsnv', () => {
 
       // CommonJS
       await fs.promises.writeFile(entryFilePath, `require('${packageName}').greeting();`);
+
+      // Check TypeScript compilation
+      const { exitCode: tscExitCode } = await app.$({ nothrow: true })`yarn tsc --noEmit`;
+      expect(tscExitCode).toBe(0);
 
       const { exitCode: androidExitCodeCjs } = await app.$({
         env: { ...process.env, CJS_ONLY: '1' },

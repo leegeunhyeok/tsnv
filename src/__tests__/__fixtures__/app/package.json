@@ -6,7 +6,8 @@
     "build:ios": "rollipop bundle --platform ios --entry-file=src/index.ts --bundle-output=dist/bundle.ios.js --reset-cache"
   },
   "devDependencies": {
-    "rollipop": "0.1.0-alpha.11"
+    "rollipop": "0.1.0-alpha.12",
+    "typescript": "5.9.3"
   },
   "packageManager": "yarn@4.12.0"
 }
