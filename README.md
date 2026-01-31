@@ -122,8 +122,7 @@ dist/
 ├── greeting.ios.js
 └── types/
     ├── index.d.ts
-    ├── greeting.android.d.ts
-    └── greeting.ios.d.ts
+    └── greeting.d.ts
 ```
 
 ### CommonJS only (`format: 'cjs'`)
@@ -135,8 +134,7 @@ dist/
 ├── greeting.ios.js
 └── types/
     ├── index.d.ts
-    ├── greeting.android.d.ts
-    └── greeting.ios.d.ts
+    └── greeting.d.ts
 ```
 
 ### Dual format (`format: ['esm', 'cjs']`)
@@ -153,8 +151,7 @@ dist/
 │   └── greeting.ios.js
 └── types/
     ├── index.d.ts
-    ├── greeting.android.d.ts
-    └── greeting.ios.d.ts
+    └── greeting.d.ts
 ```
 
 ## License
