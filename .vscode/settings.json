@@ -3,8 +3,15 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "editor.defaultFormatter": "oxc.oxc-vscode",
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "oxc.enable": true
+  "oxc.enable": true,
+  "oxc.fmt.experimental": true,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  }
 }

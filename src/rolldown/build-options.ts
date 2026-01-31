@@ -6,6 +6,7 @@ import type { Context, Format } from '../types';
 import { getUniquePlatformSpecificFiles, resolveFilename } from '../utils/path';
 import { dts } from './plugins/dts';
 import { external } from './plugins/external';
+import { report } from './plugins/report';
 import type { BuildOptions, PluginContext } from './types';
 
 export function resolveBuildOptions(
@@ -19,7 +20,6 @@ export function resolveBuildOptions(
 
   const baseOptions: rolldown.BuildOptions = {
     input: options.files,
-    plugins: [external(pluginContext)],
     output: {
       banner: options.config.banner,
       footer: options.config.footer,
@@ -43,8 +43,9 @@ export function resolveBuildOptions(
   const filename = resolveFilename();
 
   const resolvedBuildOptions = uniqueFormats.map((format) => {
-    return {
+    const buildOptions: rolldown.BuildOptions = {
       ...baseOptions,
+      plugins: [external(pluginContext), report({ cwd: options.cwd, format })],
       output: {
         ...baseOptions.output,
         dir: isSingleFormat ? options.config.outDir : path.join(options.config.outDir, format),
@@ -53,7 +54,9 @@ export function resolveBuildOptions(
         entryFileNames: filename,
         chunkFileNames: filename,
       },
-    } satisfies rolldown.BuildOptions;
+    };
+
+    return buildOptions;
   });
 
   if (options.config.dts) {
@@ -65,7 +68,8 @@ export function resolveBuildOptions(
         options.config.specifiers,
       ),
       plugins: [
-        ...(Array.isArray(baseOptions.plugins) ? baseOptions.plugins : [baseOptions.plugins]),
+        external(pluginContext),
+        report({ cwd: options.cwd, format: 'dts' }),
         dts(options.config),
       ],
       output: {

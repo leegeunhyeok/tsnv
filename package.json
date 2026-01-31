@@ -2,9 +2,6 @@
   "name": "tsnv",
   "version": "0.0.0",
   "description": "Modern build toolkit for React Native libraries",
-  "workspaces": [
-    "example"
-  ],
   "license": "MIT",
   "author": "Geunhyeok Lee <dev.ghlee@gmail.com>",
   "repository": {
@@ -13,6 +10,9 @@
     "directory": "."
   },
   "bin": "bin.js",
+  "workspaces": [
+    "example"
+  ],
   "files": [
     "bin.js",
     "dist"
@@ -53,6 +53,7 @@
     "empathic": "^2.0.0",
     "es-toolkit": "^1.44.0",
     "obug": "^2.1.1",
+    "picocolors": "^1.1.1",
     "rolldown": "1.0.0-rc.2",
     "rolldown-plugin-dts": "0.21.8"
   },
@@ -62,7 +63,6 @@
     "oxfmt": "^0.27.0",
     "oxlint": "^1.42.0",
     "oxlint-tsgolint": "^0.11.4",
-    "picocolors": "^1.1.1",
     "tsdown": "^0.20.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
