@@ -86,6 +86,9 @@ export default defineConfig({
   // Asset file extensions (Metro defaults)
   assetExtensions: ['bmp', 'gif', 'jpg', 'jpeg', 'png', 'psd', 'svg', 'webp' /* ... */],
 
+  // The directory where asset files will be written.
+  assetsDir: '_assets',
+
   // Files to exclude from the build
   exclude: /__(?:tests?|fixtures?|mocks?)__/,
 
@@ -112,13 +115,18 @@ export default defineConfig({
 
 ```
 dist/
-├── modules/
-│   ├── index.js
-│   ├── greeting.android.js
-│   └── greeting.ios.js
-└── types/
-    ├── index.d.ts
-    └── greeting.d.ts
+│   # JavaScript
+├── index.js
+├── greeting.android.js
+├── greeting.ios.js
+│  
+│   # Types
+├── index.d.ts
+├── greeting.d.ts
+│
+│   # Assets
+└── _assets/
+      └── (files)
 ```
 
 ## License
