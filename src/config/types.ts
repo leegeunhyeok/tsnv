@@ -1,8 +1,6 @@
 import type { TsConfigJson } from 'get-tsconfig';
 import type { OutputOptions } from 'rolldown';
 
-import type { Format } from '../types';
-
 export interface Config {
   /**
    * Defaults to `'src'`
@@ -20,12 +18,6 @@ export interface Config {
    * Defaults to `/__(?:tests?|fixtures?|mocks?)__/`
    */
   exclude?: RegExp;
-  /**
-   * Expected format of generated code.
-   *
-   * Defaults to `'esm'`
-   */
-  format?: Format | Format[];
   /**
    * Specifiers to resolve platform specific modules.
    *

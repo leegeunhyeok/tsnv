@@ -19,8 +19,6 @@ export function report(options: ReportOptions): RolldownPlugin {
     switch (format) {
       case 'esm':
         return pc.blue(`[ESM]`);
-      case 'cjs':
-        return pc.yellow(`[CJS]`);
       case 'dts':
         return pc.green(`[DTS]`);
     }

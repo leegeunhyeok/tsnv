@@ -10,6 +10,8 @@ import { DEFAULT_CONFIG } from './config/default';
 import { resolveContext } from './context';
 import { build } from './rolldown';
 import { collectFiles } from './utils/fs';
+import { withBoundary } from './utils/log';
+import { getBindingErrors } from './utils/rolldown';
 
 declare const __VERSION__: string;
 const version = `v${__VERSION__}`;
@@ -46,8 +48,11 @@ async function main() {
 }
 
 await main().catch((reason) => {
-  console.error(pc.red(`Build failed`));
-  console.error(); // empty line
-  console.error(reason);
+  const errors = getBindingErrors(reason) ?? ([reason] as Error[]);
+  console.error(''); // empty line
+  errors.forEach((error, index) => {
+    console.error(withBoundary(pc.red(`Error #${index + 1}`), error.message) + '\n');
+  });
+  console.error(pc.red(`Build failed with ${errors.length} error${errors.length > 1 ? 's' : ''}`));
   process.exit(1);
 });

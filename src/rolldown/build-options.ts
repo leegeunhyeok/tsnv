@@ -2,8 +2,10 @@ import path from 'node:path';
 
 import type * as rolldown from 'rolldown';
 
-import type { Context, Format } from '../types';
+import type { Context } from '../types';
 import { getUniquePlatformSpecificFiles, resolveFilename } from '../utils/path';
+import { asset } from './plugins/asset';
+import { blockRequire } from './plugins/block-require';
 import { dts } from './plugins/dts';
 import { external } from './plugins/external';
 import { report } from './plugins/report';
@@ -20,6 +22,9 @@ export function resolveBuildOptions(
 
   const baseOptions: rolldown.BuildOptions = {
     input: options.files,
+    transform: {
+      jsx: 'react-jsx',
+    },
     output: {
       banner: options.config.banner,
       footer: options.config.footer,
@@ -27,37 +32,26 @@ export function resolveBuildOptions(
       outro: options.config.outro,
       sourcemap: options.config.sourcemap,
       preserveModulesRoot: options.config.source,
+      cleanDir: options.config.clean,
       preserveModules: true,
+      polyfillRequire: false,
     },
   };
 
-  let formats: Format[];
-  if (Array.isArray(options.config.format)) {
-    formats = options.config.format;
-  } else {
-    formats = [options.config.format];
-  }
-
-  const uniqueFormats = Array.from(new Set(formats));
-  const isSingleFormat = uniqueFormats.length === 1;
   const filename = resolveFilename();
-
-  const resolvedBuildOptions = uniqueFormats.map((format) => {
-    const buildOptions: rolldown.BuildOptions = {
+  const resolvedBuildOptions: rolldown.BuildOptions[] = [
+    {
       ...baseOptions,
-      plugins: [external(pluginContext), report({ cwd: options.cwd, format })],
+      plugins: [...getBasePlugins(pluginContext), report({ cwd: options.cwd, format: 'esm' })],
       output: {
         ...baseOptions.output,
-        dir: isSingleFormat ? options.config.outDir : path.join(options.config.outDir, format),
-        cleanDir: options.config.clean,
-        format,
+        format: 'esm',
+        dir: options.config.outDir,
         entryFileNames: filename,
         chunkFileNames: filename,
       },
-    };
-
-    return buildOptions;
-  });
+    },
+  ];
 
   if (options.config.dts) {
     resolvedBuildOptions.push({
@@ -68,14 +62,14 @@ export function resolveBuildOptions(
         options.config.specifiers,
       ),
       plugins: [
-        external(pluginContext),
+        ...getBasePlugins(pluginContext),
         report({ cwd: options.cwd, format: 'dts' }),
         dts(options.config),
       ],
       output: {
         ...baseOptions.output,
-        cleanDir: options.config.clean,
-        dir: path.join(options.config.outDir, 'types'),
+        cleanDir: false,
+        dir: options.config.outDir,
         format: 'esm',
         entryFileNames: filename,
         chunkFileNames: filename,
@@ -84,4 +78,8 @@ export function resolveBuildOptions(
   }
 
   return resolvedBuildOptions;
+}
+
+function getBasePlugins(pluginContext: PluginContext) {
+  return [blockRequire(), asset(pluginContext), external(pluginContext)];
 }

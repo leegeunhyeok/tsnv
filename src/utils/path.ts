@@ -40,7 +40,7 @@ hasPlatformSpecificModule.cache = new Map<string, string[]>();
  * In the case of platform-specific modules, a prefix such as `android.js` or `ios.js` is added before the module name.
  * If the standard module specification, which requires the full file path to be specified, is followed, platform-specific modules cannot be found.
  *
- * Therefore, the `.js` extension is used regardless of whether the module is ESM or CJS.
+ * Therefore, the `.js` extension is used.
  */
 export function resolveFilename() {
   return `[name].js`;

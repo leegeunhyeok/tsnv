@@ -16,7 +16,6 @@ Modern build toolkit for React Native libraries<br>
 
 - **Fast** - Powered by [Rolldown](https://rolldown.rs), a Rust-based bundler
 - **Platform-aware** - Automatic handling of platform-specific modules (`.android.ts`, `.ios.ts`, `.native.ts`)
-- **Dual format** - Supports both CommonJS and ESM output
 - **TypeScript** - First-class TypeScript support with automatic `.d.ts` generation
 - **Zero-config** - Sensible defaults that just work
 - **Yarn PnP** - Works seamlessly with Yarn Plug'n'Play
@@ -46,7 +45,6 @@ That's it. tsnv works out of the box with sensible defaults:
 
 - Source directory: `src`
 - Output directory: `dist`
-- Format: ESM
 - TypeScript declarations: enabled
 
 ### Custom Configuration (Optional)
@@ -57,7 +55,6 @@ If you need to customize the build, create a `tsnv.config.ts`:
 import { defineConfig } from 'tsnv';
 
 export default defineConfig({
-  format: ['esm', 'cjs'],
   sourcemap: true,
 });
 ```
@@ -75,9 +72,6 @@ export default defineConfig({
 
   // Output directory
   outDir: 'dist',
-
-  // Output format: 'esm', 'cjs', or ['esm', 'cjs']
-  format: 'esm',
 
   // Generate TypeScript declaration files
   dts: true,
@@ -115,39 +109,9 @@ export default defineConfig({
 
 ## Output Structure
 
-### ESM only (`format: 'esm'`)
-
 ```
 dist/
-├── index.js
-├── greeting.android.js
-├── greeting.ios.js
-└── types/
-    ├── index.d.ts
-    └── greeting.d.ts
-```
-
-### CommonJS only (`format: 'cjs'`)
-
-```
-dist/
-├── index.js
-├── greeting.android.js
-├── greeting.ios.js
-└── types/
-    ├── index.d.ts
-    └── greeting.d.ts
-```
-
-### Dual format (`format: ['esm', 'cjs']`)
-
-```
-dist/
-├── esm/
-│   ├── index.js
-│   ├── greeting.android.js
-│   └── greeting.ios.js
-├── cjs/
+├── modules/
 │   ├── index.js
 │   ├── greeting.android.js
 │   └── greeting.ios.js
