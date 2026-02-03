@@ -37,6 +37,12 @@ export interface Config {
    */
   assetExtensions?: string[];
   /**
+   * The directory where asset files will be written.
+   *
+   * Defaults to `'_assets'`
+   */
+  assetsDir?: string;
+  /**
    * Enables generation of TypeScript declaration files (.d.ts).
    *
    * Defaults to `true`

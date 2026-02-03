@@ -1,11 +1,17 @@
 {
-  "name": "@tsnv/example",
+  "name": "@tsnv/example-lib",
   "private": true,
   "scripts": {
     "build": "tsnv"
   },
   "devDependencies": {
+    "react": "^19.1.0",
+    "react-native": "^0.83.1",
     "tsnv": "workspace:*",
     "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   }
 }

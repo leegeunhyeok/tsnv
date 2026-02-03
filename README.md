@@ -16,6 +16,7 @@ Modern build toolkit for React Native libraries<br>
 
 - **Fast** - Powered by [Rolldown](https://rolldown.rs), a Rust-based bundler
 - **Platform-aware** - Automatic handling of platform-specific modules (`.android.ts`, `.ios.ts`, `.native.ts`)
+- **Assets** - Built-in support for assets (images, fonts, and other static files)
 - **TypeScript** - First-class TypeScript support with automatic `.d.ts` generation
 - **Zero-config** - Sensible defaults that just work
 - **Yarn PnP** - Works seamlessly with Yarn Plug'n'Play

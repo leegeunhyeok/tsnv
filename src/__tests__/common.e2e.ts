@@ -71,6 +71,38 @@ describe('tsnv', () => {
     });
   });
 
+  describe.sequential('Assets', () => {
+    let fixture: Fixture;
+    let $: Shell;
+
+    beforeAll(async () => {
+      await cleanupFixture();
+      fixture = await createFixture('asset');
+      $ = fixture.$;
+    });
+
+    afterAll(async () => {
+      await cleanupFixture();
+    });
+
+    it.sequential('should build a package', async () => {
+      const { exitCode } = await $`yarn tsnv`;
+      expect(exitCode).toBe(0);
+    });
+
+    it.sequential('should contain generated files', async () => {
+      const { stdout } = await $`yarn pack --out ${PACKED_PACKAGE_PATH} --json`;
+
+      // Assets & JavaScript
+      expect(stdout).toContain('_assets/src/assets/image.android.png');
+      expect(stdout).toContain('_assets/src/assets/image.ios.png');
+      expect(stdout).toContain('index.js');
+
+      // Types
+      expect(stdout).toContain('index.d.ts');
+    });
+  });
+
   describe.sequential('Yarn PnP', () => {
     let fixture: Fixture;
     let $: Shell;

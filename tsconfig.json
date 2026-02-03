@@ -11,5 +11,5 @@
     "allowJs": false,
     "skipLibCheck": true
   },
-  "exclude": ["**/dist/*", "**/__tests__/**", "example/**"]
+  "exclude": ["**/dist/*", "**/__tests__/**", "**/__fixtures__/**", "example/**"]
 }

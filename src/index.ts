@@ -9,6 +9,7 @@ import type { ResolvedConfig } from './config/default';
 import { DEFAULT_CONFIG } from './config/default';
 import { resolveContext } from './context';
 import { build } from './rolldown';
+import { flushAssets } from './utils/asset';
 import { collectFiles } from './utils/fs';
 import { withBoundary } from './utils/log';
 import { getBindingErrors } from './utils/rolldown';
@@ -32,7 +33,7 @@ async function main() {
   console.log(`Config File: ${pc.underline(configFile)}`);
   console.log(`Source Path: ${pc.blue(path.resolve(config.source))}`);
 
-  const context = await resolveContext(process.cwd());
+  const context = await resolveContext(cwd, config);
   debug('Resolved context', context);
 
   const files = await collectFiles(config);
@@ -42,8 +43,10 @@ async function main() {
   const startedAt = performance.now();
   await build(context, { cwd, files, config });
   const endedAt = performance.now();
-  const duration = `${Math.floor(endedAt - startedAt)}ms`;
 
+  flushAssets(context);
+
+  const duration = `${Math.floor(endedAt - startedAt)}ms`;
   console.log(`Build completed in ${pc.green(duration)}`);
 }
 

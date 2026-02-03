@@ -1,11 +1,9 @@
-import path from 'node:path';
-
 import type * as rolldown from 'rolldown';
 
 import type { Context } from '../types';
 import { getUniquePlatformSpecificFiles, resolveFilename } from '../utils/path';
-import { asset } from './plugins/asset';
 import { blockRequire } from './plugins/block-require';
+import { collectAsset } from './plugins/collect-asset';
 import { dts } from './plugins/dts';
 import { external } from './plugins/external';
 import { report } from './plugins/report';
@@ -81,5 +79,5 @@ export function resolveBuildOptions(
 }
 
 function getBasePlugins(pluginContext: PluginContext) {
-  return [blockRequire(), asset(pluginContext), external(pluginContext)];
+  return [blockRequire(), collectAsset(pluginContext), external(pluginContext)];
 }

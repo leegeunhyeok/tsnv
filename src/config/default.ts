@@ -4,7 +4,6 @@ export const DEFAULT_CONFIG = {
   source: 'src',
   outDir: 'dist',
   exclude: /__(?:tests?|fixtures?|mocks?)__/,
-  format: 'esm',
   specifiers: ['android', 'ios', 'native'],
   sourceExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   assetExtensions: [
@@ -43,6 +42,7 @@ export const DEFAULT_CONFIG = {
     // Archives (virtual files)
     'zip',
   ],
+  assetsDir: '_assets',
   dts: true,
   clean: true,
 } satisfies Config;
