@@ -94,3 +94,7 @@ export function getUniquePlatformSpecificFiles(
 
   return result;
 }
+
+export function toRelativePath(pathString: string) {
+  return pathString.startsWith('.') ? pathString : `.${path.sep}${pathString}`;
+}

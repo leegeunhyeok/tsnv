@@ -5,6 +5,7 @@ import type { RolldownPlugin } from 'rolldown';
 
 import { collectAssets } from '../../utils/asset';
 import { addAsset } from '../../utils/asset';
+import { toRelativePath } from '../../utils/path';
 import type { PluginContext } from '../types';
 
 export function collectAsset(context: PluginContext): RolldownPlugin {
@@ -35,16 +36,10 @@ export function collectAsset(context: PluginContext): RolldownPlugin {
           } else {
             assert(virtualDir, 'virtual asset directory not found');
             const basename = path.basename(assetPath);
-            const toRootRelativePath = path.relative(resolveDir, context.source);
-            const virtualAssetPath = path.join(
-              toRootRelativePath,
-              virtualDir,
-              basename,
-            );
+            const sourceRelativePath = path.relative(resolveDir, context.source);
+            const virtualAssetPath = path.join(sourceRelativePath, virtualDir, basename);
             return {
-              id: virtualAssetPath.startsWith('.')
-                ? virtualAssetPath
-                : `.${path.sep}${virtualAssetPath}`,
+              id: toRelativePath(virtualAssetPath),
               external: true,
             };
           }

@@ -8,6 +8,7 @@ import {
   isPlatformSpecificFile,
   removePlatformSpecificExtension,
   resolveFilename,
+  toRelativePath,
 } from './path';
 
 describe('path', () => {
@@ -158,6 +159,14 @@ describe('path', () => {
         'src/android/index.ts',
         'src/ios/index.ts',
       ]);
+    });
+  });
+
+  describe('toRelativePath', () => {
+    it('should return the relative path', () => {
+      expect(toRelativePath('path/to/file')).toBe('./path/to/file');
+      expect(toRelativePath('./path/to/file')).toBe('./path/to/file');
+      expect(toRelativePath('../path/to/file')).toBe('../path/to/file');
     });
   });
 });
