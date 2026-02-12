@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import pc from 'picocolors';
 
-import type { PluginContext } from '../rolldown/types';
+import type { PluginContext } from '../features/rolldown/types';
 import type { Context } from '../types';
 
 // key: asset path, value: virtual file path

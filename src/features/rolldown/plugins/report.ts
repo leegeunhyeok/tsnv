@@ -3,8 +3,8 @@ import path from 'node:path';
 import pc from 'picocolors';
 import type { RolldownPlugin } from 'rolldown';
 
-import { Format } from '../../types';
-import { calcSize, formatBytes, type SizeInfo } from '../../utils/fs';
+import type { Format } from '../../../types';
+import { calcSize, formatBytes, type SizeInfo } from '../../../utils/fs';
 
 export interface ReportOptions {
   cwd: string;

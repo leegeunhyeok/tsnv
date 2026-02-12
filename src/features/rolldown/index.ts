@@ -1,7 +1,7 @@
 import { createDebug } from 'obug';
 import { build as rolldownBuild } from 'rolldown';
 
-import type { Context } from '../types';
+import type { Context } from '../../types';
 import { resolveBuildOptions } from './build-options';
 import type { BuildOptions } from './types';
 

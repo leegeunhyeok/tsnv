@@ -8,7 +8,7 @@ import { debug } from './common';
 import type { ResolvedConfig } from './config/default';
 import { DEFAULT_CONFIG } from './config/default';
 import { resolveContext } from './context';
-import { build } from './rolldown';
+import { build } from './features/rolldown';
 import { flushAssets } from './utils/asset';
 import { collectFiles } from './utils/fs';
 import { withBoundary } from './utils/log';

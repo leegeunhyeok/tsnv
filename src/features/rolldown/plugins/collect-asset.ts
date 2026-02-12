@@ -3,9 +3,9 @@ import path from 'node:path';
 import { assert } from 'es-toolkit';
 import type { RolldownPlugin } from 'rolldown';
 
-import { collectAssets } from '../../utils/asset';
-import { addAsset } from '../../utils/asset';
-import { toRelativePath } from '../../utils/path';
+import { collectAssets } from '../../../utils/asset';
+import { addAsset } from '../../../utils/asset';
+import { toRelativePath } from '../../../utils/path';
 import type { PluginContext } from '../types';
 
 export function collectAsset(context: PluginContext): RolldownPlugin {

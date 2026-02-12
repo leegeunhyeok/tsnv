@@ -2,8 +2,8 @@ import { createDebug } from 'obug';
 import type * as rolldown from 'rolldown';
 import { dts as dtsPlugin } from 'rolldown-plugin-dts';
 
-import type { ResolvedConfig } from '../../config/default';
-import { removePlatformSpecificExtension } from '../../utils/path';
+import type { ResolvedConfig } from '../../../config/default';
+import { removePlatformSpecificExtension } from '../../../utils/path';
 
 const PLUGIN_NAME = 'tsnv:dts';
 const debug = createDebug(PLUGIN_NAME);
