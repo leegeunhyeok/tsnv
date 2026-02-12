@@ -34,11 +34,18 @@ export async function generateDeclarations(options: GenerateDeclarationsOptions)
       ]),
     );
 
+    let stdErr = '';
+    let stdOut = '';
+
+    child.stdout.on('data', (data) => (stdOut += data));
+    child.stderr.on('data', (data) => (stdErr += data));
+
     child.on('close', (code) => {
       if (code === 0) {
         resolve();
       } else {
-        reject(new Error(`${tscBin} exited with code ${code}`));
+        const stdout = stdOut + stdErr;
+        reject(new Error(`${tscBin} exited with code ${code}` + (stdout ? `\n\n${stdout}` : '')));
       }
     });
 
