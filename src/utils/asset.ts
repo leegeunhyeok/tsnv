@@ -5,6 +5,7 @@ import pc from 'picocolors';
 
 import type { PluginContext } from '../features/rolldown/types';
 import type { Context } from '../types';
+import { ASSET_LABEL } from './log';
 
 // key: asset path, value: virtual file path
 const assets = new Map<string, string>();
@@ -15,7 +16,6 @@ export function addAsset(key: string, value: string) {
 
 export function flushAssets(context: Context) {
   let count = 0;
-  const label = pc.yellow('[AST]');
   for (const [key, value] of assets.entries()) {
     const destination = path.join(context.outdir, value);
     const dirname = path.dirname(destination);
@@ -26,12 +26,12 @@ export function flushAssets(context: Context) {
 
     fs.copyFileSync(key, destination);
     console.log(
-      label,
+      ASSET_LABEL,
       pc.dim(path.relative(context.cwd, dirname) + path.sep) + pc.yellow(filename),
     );
     count++;
   }
-  console.log(label, `${count} files`);
+  console.log(ASSET_LABEL, `${count} files`);
   assets.clear();
 }
 

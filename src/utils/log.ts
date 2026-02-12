@@ -1,7 +1,5 @@
 import pc from 'picocolors';
 
-import type { Format } from '../types';
-
 export function withBoundary(title: string, text: string) {
   const messages = [
     `╭─ ${title}`,
@@ -13,11 +11,6 @@ export function withBoundary(title: string, text: string) {
   return messages.join('\n');
 }
 
-export function label(format: Format | 'dts') {
-  switch (format) {
-    case 'esm':
-      return pc.blue(`[ESM]`);
-    case 'dts':
-      return pc.green(`[DTS]`);
-  }
-}
+export const ESM_LABEL = pc.blue(`[ESM]`);
+export const DTS_LABEL = pc.green(`[DTS]`);
+export const ASSET_LABEL = pc.yellow(`[AST]`);

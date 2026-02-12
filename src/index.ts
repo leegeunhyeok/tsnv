@@ -14,7 +14,7 @@ import { postBuildDts } from './features/typescript/post-build-dts';
 import { flushAssets } from './utils/asset';
 import { formatTime } from './utils/format';
 import { collectFiles } from './utils/fs';
-import { label, withBoundary } from './utils/log';
+import { DTS_LABEL, withBoundary } from './utils/log';
 import { getBindingErrors } from './utils/rolldown';
 
 declare const __VERSION__: string;
@@ -50,8 +50,7 @@ async function main() {
   const postBuildStartedAt = performance.now();
   if (context.typescript.isolatedDeclarations === false) {
     debug('Generate type declarations');
-    const dtsLabel = label('dts');
-    console.log(dtsLabel, 'Generating type declarations...');
+    console.log(DTS_LABEL, 'Generating type declarations...');
     await generateDeclarations({
       cwd,
       outDir: path.resolve(cwd, config.outDir),
@@ -62,7 +61,7 @@ async function main() {
       path.resolve(cwd, config.source),
       path.resolve(cwd, config.outDir),
     );
-    console.log(dtsLabel, `${generatedDts.length} files`);
+    console.log(DTS_LABEL, `${generatedDts.length} files`);
   }
 
   flushAssets(context);
