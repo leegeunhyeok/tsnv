@@ -9,10 +9,6 @@ const PLUGIN_NAME = 'tsnv:dts';
 const debug = createDebug(PLUGIN_NAME);
 
 export function dts(config: ResolvedConfig): rolldown.RolldownPluginOption {
-  if (!config.dts) {
-    return null;
-  }
-
   const dtsExtension = ['d'];
   const dtsRenamer: rolldown.Plugin = {
     name: 'tsnv:dts-renamer',

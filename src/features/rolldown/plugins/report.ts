@@ -5,6 +5,7 @@ import type { RolldownPlugin } from 'rolldown';
 
 import type { Format } from '../../../types';
 import { calcSize, formatBytes, type SizeInfo } from '../../../utils/fs';
+import { label } from '../../../utils/log';
 
 export interface ReportOptions {
   cwd: string;
@@ -15,14 +16,7 @@ const noop = (text: string) => text;
 
 export function report(options: ReportOptions): RolldownPlugin {
   const { cwd, format } = options;
-  const formatLabel = (() => {
-    switch (format) {
-      case 'esm':
-        return pc.blue(`[ESM]`);
-      case 'dts':
-        return pc.green(`[DTS]`);
-    }
-  })();
+  const formatLabel = label(format);
 
   return {
     name: 'tsnv:report',

@@ -5,6 +5,7 @@
     "build": "tsnv"
   },
   "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20260212.1",
     "react": "^19.1.0",
     "react-native": "^0.83.1",
     "tsnv": "workspace:*",

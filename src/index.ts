@@ -9,9 +9,12 @@ import type { ResolvedConfig } from './config/default';
 import { DEFAULT_CONFIG } from './config/default';
 import { resolveContext } from './context';
 import { build } from './features/rolldown';
+import { generateDeclarations } from './features/typescript/generate-declarations';
+import { postBuildDts } from './features/typescript/post-build-dts';
 import { flushAssets } from './utils/asset';
+import { formatTime } from './utils/format';
 import { collectFiles } from './utils/fs';
-import { withBoundary } from './utils/log';
+import { label, withBoundary } from './utils/log';
 import { getBindingErrors } from './utils/rolldown';
 
 declare const __VERSION__: string;
@@ -40,14 +43,37 @@ async function main() {
   console.log(`Collected files: ${pc.dim(files.length)}`);
 
   console.log('Build start');
-  const startedAt = performance.now();
+  const buildStartedAt = performance.now();
   await build(context, { cwd, files, config });
-  const endedAt = performance.now();
+  const buildEndedAt = performance.now();
+
+  const postBuildStartedAt = performance.now();
+  if (context.typescript.isolatedDeclarations === false) {
+    debug('Generate type declarations');
+    const dtsLabel = label('dts');
+    console.log(dtsLabel, 'Generating type declarations...');
+    await generateDeclarations({
+      cwd,
+      outDir: path.resolve(cwd, config.outDir),
+      tsconfigPath: path.resolve(cwd, config.tsconfig),
+      tsgo: config.experimental?.tsgo,
+    });
+    const generatedDts = await postBuildDts(
+      path.resolve(cwd, config.source),
+      path.resolve(cwd, config.outDir),
+    );
+    console.log(dtsLabel, `${generatedDts.length} files`);
+  }
 
   flushAssets(context);
+  const postBuildEndedAt = performance.now();
 
-  const duration = `${Math.floor(endedAt - startedAt)}ms`;
-  console.log(`Build completed in ${pc.green(duration)}`);
+  const buildDuration = buildEndedAt - buildStartedAt;
+  const postBuildDuration = postBuildEndedAt - postBuildStartedAt;
+
+  console.log(`Done in ${pc.green(formatTime(buildDuration + postBuildDuration))}`);
+  console.log(pc.gray(`├─ build: ${formatTime(buildDuration)}`));
+  console.log(pc.gray(`└─ post: ${formatTime(postBuildDuration)}`));
 }
 
 await main().catch((reason) => {

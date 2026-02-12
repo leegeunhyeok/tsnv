@@ -88,7 +88,7 @@ export interface Config {
    *
    * @see https://www.typescriptlang.org/tsconfig
    */
-  tsconfigRaw?: Omit<TsConfigJson, 'compilerOptions'>;
+  tsconfigRaw?: TsConfigJson;
   /**
    * Experimental configuration.
    */

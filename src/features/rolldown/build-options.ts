@@ -51,7 +51,7 @@ export function resolveBuildOptions(
     },
   ];
 
-  if (options.config.dts) {
+  if (options.config.dts && context.typescript.isolatedDeclarations === true) {
     resolvedBuildOptions.push({
       ...baseOptions,
       input: getUniquePlatformSpecificFiles(

@@ -45,6 +45,7 @@ export const DEFAULT_CONFIG = {
   assetsDir: '_assets',
   dts: true,
   clean: true,
+  tsconfig: 'tsconfig.json'
 } satisfies Config;
 
 export type ResolvedConfig = Config & typeof DEFAULT_CONFIG;
