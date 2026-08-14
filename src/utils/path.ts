@@ -9,7 +9,7 @@ export async function hasPlatformSpecificModule(
   config: ResolvedConfig,
 ) {
   const specifiers = config.specifiers;
-  const resolveDir = path.dirname(importer);
+  const resolveDir = path.resolve(path.dirname(importer), path.dirname(id));
 
   let fileList = hasPlatformSpecificModule.cache.get(resolveDir);
   if (fileList == null) {

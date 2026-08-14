@@ -20,15 +20,15 @@
   "type": "module",
   "main": "./dist/config.cjs",
   "module": "./dist/config.js",
-  "types": "./dist/config.d.cjs",
+  "types": "./dist/config.d.cts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/config.d.js",
+        "types": "./dist/config.d.ts",
         "default": "./dist/config.js"
       },
       "require": {
-        "types": "./dist/config.d.cjs",
+        "types": "./dist/config.d.cts",
         "default": "./dist/config.cjs"
       }
     },
@@ -63,7 +63,6 @@
   "devDependencies": {
     "@changesets/cli": "^3.0.0",
     "@types/node": "^26.2.0",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "oxfmt": "^0.63.0",
     "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",

@@ -106,10 +106,16 @@ export default defineConfig({
 
   // Experimental options
   experimental: {
-    tsgo: false, // Use tsgo compiler
+    tsgo: false, // Prefer the native TypeScript compiler
   },
 });
 ```
+
+TypeScript 7 uses the native compiler from the official `typescript` package. When using this
+option with TypeScript 5 or 6, install `@typescript/native-preview` as well.
+
+TypeScript 7's native compiler does not currently support Yarn PnP's virtual filesystem. Use the
+`node-modules` linker with TypeScript 7, or TypeScript 6 when generating declarations under PnP.
 
 ## Output Structure
 

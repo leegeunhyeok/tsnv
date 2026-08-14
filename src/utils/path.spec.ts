@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 import { describe, expect, it, vi } from 'vitest';
 
 import type { ResolvedConfig } from '../config/default';
@@ -38,6 +41,18 @@ describe('path', () => {
           specifiers: ['foo', 'bar'],
         } as ResolvedConfig),
       ).toBe(false);
+    });
+
+    it('should resolve a platform specific module from a nested directory', async () => {
+      expect(
+        await hasPlatformSpecificModule('./platform/index', '/root/src/importer.ts', {
+          specifiers: ['android', 'ios', 'native'],
+        } as ResolvedConfig),
+      ).toBe(true);
+      expect(fs.promises.readdir).toHaveBeenLastCalledWith(path.resolve('/root/src/platform'), {
+        recursive: false,
+        withFileTypes: true,
+      });
     });
   });
 

@@ -54,6 +54,14 @@ export async function createFixture(
     recursive: true,
   });
 
+  if (pnp) {
+    // TypeScript 7's native compiler cannot access Yarn PnP's virtual filesystem.
+    const packageJsonPath = path.join(fixtureDir, 'package.json');
+    const packageJson = JSON.parse(await fs.promises.readFile(packageJsonPath, 'utf-8'));
+    packageJson.devDependencies.typescript = '6.0.3';
+    await fs.promises.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
+  }
+
   log('Listing files...');
   await $({ stdio: 'inherit' })`find . -type f`;
 

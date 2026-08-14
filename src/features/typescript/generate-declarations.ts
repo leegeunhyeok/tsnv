@@ -17,12 +17,14 @@ export async function generateDeclarations(options: GenerateDeclarationsOptions)
   assert(packageManager, 'Failed to get package manager');
   debug('Detected package manager', packageManager);
 
+  const typescriptVersion = options.tsgo ? await getInstalledTypeScriptVersion() : undefined;
+  const compiler = resolveDeclarationCompiler(options.tsgo, typescriptVersion);
+
   return new Promise<void>((resolve, reject) => {
-    const tscBin = options.tsgo ? 'tsgo' : 'tsc';
     const child = spawn(
       packageManager.name,
       withExecuteArguments(packageManager.name, [
-        tscBin,
+        compiler,
         '--declaration',
         '--emitDeclarationOnly',
         '--noEmit',
@@ -32,6 +34,7 @@ export async function generateDeclarations(options: GenerateDeclarationsOptions)
         '--outDir',
         options.outDir,
       ]),
+      { cwd: options.cwd },
     );
 
     let stdErr = '';
@@ -45,12 +48,28 @@ export async function generateDeclarations(options: GenerateDeclarationsOptions)
         resolve();
       } else {
         const stdout = stdOut + stdErr;
-        reject(new Error(`${tscBin} exited with code ${code}` + (stdout ? `\n\n${stdout}` : '')));
+        reject(new Error(`${compiler} exited with code ${code}` + (stdout ? `\n\n${stdout}` : '')));
       }
     });
 
     child.on('error', reject);
   });
+}
+
+export function resolveDeclarationCompiler(
+  useTsgo: boolean | undefined,
+  typescriptVersion: string | undefined,
+) {
+  const majorVersion = Number.parseInt(typescriptVersion?.split('.')[0] ?? '', 10);
+  return useTsgo && !(majorVersion >= 7) ? 'tsgo' : 'tsc';
+}
+
+async function getInstalledTypeScriptVersion() {
+  try {
+    return (await import('typescript')).versionMajorMinor;
+  } catch {
+    return undefined;
+  }
 }
 
 function withExecuteArguments(packageManagerType: string, args: string[]) {

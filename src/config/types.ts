@@ -97,9 +97,10 @@ export interface Config {
 
 export interface ExperimentalConfig {
   /**
-   * Whether to use the tsgo compiler.
+   * Whether to use the native TypeScript compiler.
    *
-   * To use this option, make sure `@typescript/native-preview` is installed as a dependency.
+   * TypeScript 7 uses the official `typescript` package. TypeScript 5 and 6 require
+   * `@typescript/native-preview` when this option is enabled.
    */
   tsgo?: boolean;
 }

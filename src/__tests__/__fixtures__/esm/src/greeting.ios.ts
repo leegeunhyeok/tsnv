@@ -1,3 +1,3 @@
-export function greeting() {
-  console.log('Hello, iOS!');
+export function greeting(): string {
+  return 'Hello, iOS!';
 }

@@ -1,3 +1,3 @@
-declare function greeting();
+declare function greeting(): string;
 
 export { greeting };
