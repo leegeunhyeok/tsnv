@@ -5,11 +5,11 @@
     "build": "tsnv"
   },
   "devDependencies": {
-    "@typescript/native-preview": "^7.0.0-dev.20260212.1",
-    "react": "^19.1.0",
-    "react-native": "^0.83.1",
+    "@typescript/native-preview": "^7.0.0-dev.20260707.2",
+    "react": "^19.2.8",
+    "react-native": "^0.87.0",
     "tsnv": "workspace:*",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "peerDependencies": {
     "react": "*",

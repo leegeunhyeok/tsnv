@@ -39,7 +39,7 @@ async function main() {
   const context = await resolveContext(cwd, config);
   debug('Resolved context', context);
 
-  const files = await collectFiles(config);
+  const files = collectFiles(config);
   console.log(`Collected files: ${pc.dim(files.length)}`);
 
   console.log('Build start');

@@ -60,6 +60,7 @@ export async function createFixture(
   log('Setting up Yarn...');
   await $({ stdio: 'inherit' })`yarn set version stable`;
   await $({ stdio: 'inherit' })`yarn config set enableGlobalCache false`;
+  await $({ stdio: 'inherit' })`yarn config set npmMinimalAgeGate 0`;
   await $({ stdio: 'inherit' })`yarn config set nodeLinker ${pnp ? 'pnp' : 'node-modules'}`;
   await $({ stdio: 'inherit' })`yarn --version`;
 

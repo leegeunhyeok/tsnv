@@ -119,7 +119,7 @@ dist/
 ├── index.js
 ├── greeting.android.js
 ├── greeting.ios.js
-│  
+│
 │   # Types
 ├── index.d.ts
 ├── greeting.d.ts

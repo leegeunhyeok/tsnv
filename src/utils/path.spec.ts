@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, vitest } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import type { ResolvedConfig } from '../config/default';
 import {
@@ -11,22 +11,22 @@ import {
   toRelativePath,
 } from './path';
 
+vi.mock('node:fs', () => {
+  const mockedFs = {
+    promises: {
+      readdir: vi.fn().mockResolvedValue([
+        { isFile: () => true, name: 'index.android.ts' },
+        { isFile: () => true, name: 'index.ios.ts' },
+        { isFile: () => true, name: 'index.ios.ts' },
+      ]),
+    },
+  };
+
+  return { default: mockedFs };
+});
+
 describe('path', () => {
   describe('hasPlatformSpecificModule', () => {
-    vitest.mock('node:fs', () => {
-      const mockedFs = {
-        promises: {
-          readdir: vi.fn().mockResolvedValue([
-            { isFile: () => true, name: 'index.android.ts' },
-            { isFile: () => true, name: 'index.ios.ts' },
-            { isFile: () => true, name: 'index.ios.ts' },
-          ]),
-        },
-      };
-
-      return { default: mockedFs };
-    });
-
     it('should return true if the platform specific module is exists', async () => {
       expect(
         await hasPlatformSpecificModule('./index', 'root', {
