@@ -6,6 +6,7 @@ import { blockRequire } from './plugins/block-require';
 import { collectAsset } from './plugins/collect-asset';
 import { dts } from './plugins/dts';
 import { external } from './plugins/external';
+import { preserveCodegenSpec } from './plugins/preserve-codegen-spec';
 import { report } from './plugins/report';
 import type { BuildOptions, PluginContext } from './types';
 
@@ -37,15 +38,21 @@ export function resolveBuildOptions(
   };
 
   const filename = resolveFilename();
+  const codegen = preserveCodegenSpec(pluginContext, filename);
   const resolvedBuildOptions: rolldown.BuildOptions[] = [
     {
       ...baseOptions,
-      plugins: [...getBasePlugins(pluginContext), report({ cwd: options.cwd, format: 'esm' })],
+      plugins: [
+        ...getBasePlugins(pluginContext),
+        ...(codegen ? [codegen.plugin] : []),
+        external(pluginContext),
+        report({ cwd: options.cwd, format: 'esm' }),
+      ],
       output: {
         ...baseOptions.output,
         format: 'esm',
         dir: options.config.outDir,
-        entryFileNames: filename,
+        entryFileNames: codegen?.entryFileNames ?? filename,
         chunkFileNames: filename,
       },
     },
@@ -61,6 +68,7 @@ export function resolveBuildOptions(
       ),
       plugins: [
         ...getBasePlugins(pluginContext),
+        external(pluginContext),
         report({ cwd: options.cwd, format: 'dts' }),
         dts(options.config),
       ],
@@ -79,5 +87,5 @@ export function resolveBuildOptions(
 }
 
 function getBasePlugins(pluginContext: PluginContext) {
-  return [blockRequire(), collectAsset(pluginContext), external(pluginContext)];
+  return [blockRequire(), collectAsset(pluginContext)];
 }
