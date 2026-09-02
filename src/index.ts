@@ -48,7 +48,7 @@ async function main() {
   const buildEndedAt = performance.now();
 
   const postBuildStartedAt = performance.now();
-  if (context.typescript.isolatedDeclarations === false) {
+  if (config.dts && context.typescript.isolatedDeclarations === false) {
     debug('Generate type declarations');
     console.log(DTS_LABEL, 'Generating type declarations...');
     await generateDeclarations({

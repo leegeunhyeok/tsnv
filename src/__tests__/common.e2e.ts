@@ -178,6 +178,33 @@ describe('tsnv', () => {
       expect(iosStdout).toContain('ios-device');
       expect(iosStdout).toContain('Welcome: Hello, iOS!');
     });
+
+    it.sequential('should skip type declarations when disabled', async () => {
+      await fs.promises.writeFile(
+        path.join(fixture.fixtureDir, 'tsnv.config.ts'),
+        [
+          "import { defineConfig } from 'tsnv';",
+          '',
+          'export default defineConfig({',
+          "  source: 'src',",
+          "  outDir: 'dist',",
+          '  dts: false,',
+          '});',
+          '',
+        ].join('\n'),
+      );
+
+      const build = await $`yarn tsnv`;
+      const generatedFiles = await glob('**/*', {
+        cwd: path.join(fixture.fixtureDir, 'dist'),
+        onlyFiles: true,
+      });
+
+      expect(build.exitCode, build.stdout + build.stderr).toBe(0);
+      expect(stripAnsi(build.stdout)).not.toContain('[DTS]');
+      expect(generatedFiles).toContain('index.js');
+      expect(generatedFiles.some((file) => file.endsWith('.d.ts'))).toBe(false);
+    });
   });
 
   describe.sequential('Assets', () => {
