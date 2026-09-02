@@ -1,8 +1,9 @@
 {
-  "name": "tsnv-test-lib-large",
+  "name": "tsnv-test-lib-codegen",
   "version": "1.0.0",
   "files": [
-    "dist"
+    "dist",
+    "src/native"
   ],
   "type": "module",
   "main": "./dist/index.js",
@@ -14,9 +15,9 @@
     }
   },
   "codegenConfig": {
-    "name": "TsnvLargeSpec",
+    "name": "TsnvTestSpec",
     "type": "all",
-    "jsSrcsDir": "src"
+    "jsSrcsDir": "src/native"
   },
   "devDependencies": {
     "typescript": "7.0.2"

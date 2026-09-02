@@ -75,6 +75,29 @@ async function generateLargeModuleTree(fixtureDir: string) {
   );
 }
 
+async function expectCodegenOutput(fixtureDir: string) {
+  const sourceSpec = path.join(fixtureDir, 'src', 'native', 'TestViewNativeComponent.ts');
+  const outputSpec = path.join(fixtureDir, 'dist', 'native', 'TestViewNativeComponent.ts');
+  const [source, output, indexJavaScript, generatedFiles] = await Promise.all([
+    fs.promises.readFile(sourceSpec),
+    fs.promises.readFile(outputSpec),
+    fs.promises.readFile(path.join(fixtureDir, 'dist', 'index.js'), 'utf-8'),
+    glob('**/*', { cwd: path.join(fixtureDir, 'dist'), onlyFiles: true }),
+  ]);
+
+  expect(output).toEqual(source);
+  expect(indexJavaScript).toMatch(/from ["']\.\/native\/TestViewNativeComponent["']/);
+  expect(indexJavaScript).not.toMatch(/TestViewNativeComponent\.[jt]s/);
+  expect(generatedFiles).toContain('native/TestViewNativeComponent.ts');
+  expect(generatedFiles).toContain('native/TestViewNativeComponent.d.ts');
+  expect(generatedFiles).not.toContain('native/TestViewNativeComponent.js');
+  expect(generatedFiles).not.toContain('native/TestViewNativeComponent.js.map');
+  expect(generatedFiles).toContain('native/NativeTestModule.js');
+  expect(generatedFiles).toContain('native/NativeTestModule.d.ts');
+  expect(generatedFiles).toContain('OutsideNativeComponent.js');
+  expect(generatedFiles).toContain('OutsideNativeComponent.d.ts');
+}
+
 describe('tsnv', () => {
   describe.sequential('ESModule', () => {
     let fixture: Fixture;
@@ -206,6 +229,71 @@ describe('tsnv', () => {
       // Types
       expect(stdout).toContain('index.d.ts');
       expect(stdout).toContain('library-assets.d.ts');
+    });
+  });
+
+  describe.sequential('React Native Codegen', () => {
+    let fixture: Fixture;
+    let $: Shell;
+
+    beforeAll(async () => {
+      await cleanupFixture();
+      fixture = await createFixture('codegen');
+      $ = fixture.$;
+    });
+
+    afterAll(async () => {
+      await cleanupFixture();
+    });
+
+    it.sequential('should preserve native component specs with regular declarations', async () => {
+      const build = await $`yarn tsnv`;
+
+      expect(build.exitCode, build.stdout + build.stderr).toBe(0);
+      await expectCodegenOutput(fixture.fixtureDir);
+    });
+
+    it.sequential('should include the preserved spec in the packed package', async () => {
+      const { stdout } = await $`yarn pack --out ${PACKED_PACKAGE_PATH} --json`;
+
+      expect(stdout).toContain('dist/native/TestViewNativeComponent.ts');
+      expect(stdout).toContain('dist/native/TestViewNativeComponent.d.ts');
+      expect(stdout).not.toContain('dist/native/TestViewNativeComponent.js');
+    });
+
+    it.sequential('should preserve native component specs with isolated declarations and clean disabled', async () => {
+      const tsconfigPath = path.join(fixture.fixtureDir, 'tsconfig.json');
+      const tsconfig = JSON.parse(await fs.promises.readFile(tsconfigPath, 'utf-8'));
+      tsconfig.compilerOptions.declaration = true;
+      tsconfig.compilerOptions.isolatedDeclarations = true;
+      const staleJavaScriptPath = path.join(
+        fixture.fixtureDir,
+        'dist/native/TestViewNativeComponent.js',
+      );
+      await Promise.all([
+        fs.promises.writeFile(tsconfigPath, JSON.stringify(tsconfig, null, 2) + '\n'),
+        fs.promises.writeFile(
+          path.join(fixture.fixtureDir, 'tsnv.config.ts'),
+          [
+            "import { defineConfig } from 'tsnv';",
+            '',
+            'export default defineConfig({',
+            "  source: 'src',",
+            "  outDir: 'dist',",
+            '  sourcemap: true,',
+            '  clean: false,',
+            '});',
+            '',
+          ].join('\n'),
+        ),
+        fs.promises.writeFile(staleJavaScriptPath, 'stale'),
+        fs.promises.writeFile(`${staleJavaScriptPath}.map`, '{}'),
+      ]);
+
+      const build = await $`yarn tsnv`;
+
+      expect(build.exitCode, build.stdout + build.stderr).toBe(0);
+      await expectCodegenOutput(fixture.fixtureDir);
     });
   });
 
