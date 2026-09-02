@@ -72,10 +72,10 @@ async function getInstalledTypeScriptVersion() {
   }
 }
 
-function withExecuteArguments(packageManagerType: string, args: string[]) {
+export function withExecuteArguments(packageManagerType: string, args: string[]) {
   switch (packageManagerType) {
     case 'npm':
-      return ['exec', ...args];
+      return ['exec', '--', ...args];
 
     default:
       return [...args];
